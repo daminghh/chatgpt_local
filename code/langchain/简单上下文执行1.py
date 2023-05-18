@@ -6,8 +6,8 @@ from qdrant_client import QdrantClient
 import openai
 import os
 
-os.environ["OPENAI_API_KEY"] = "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"
-openai.api_key = "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"
+os.environ["OPENAI_API_KEY"] = ""
+openai.api_key = ""
 
 def prompt(question, answers):
     demo_q = 'PA1怎么样'

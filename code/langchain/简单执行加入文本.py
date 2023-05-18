@@ -7,7 +7,7 @@ from langchain.document_loaders import DirectoryLoader
 from langchain.chains import RetrievalQA
 
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = ""
 
 # 加载文件夹中的所有txt类型的文件
 loader = DirectoryLoader('D:/IdeaProjects/document.ai/code/langchain/data/', glob='**/*.txt')

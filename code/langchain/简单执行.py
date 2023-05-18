@@ -1,7 +1,9 @@
 from langchain.llms import OpenAI
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 import os
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = ""
 
-llm = OpenAI(model_name="text-davinci-003", max_tokens=1024)
-output = llm("你好")
-print(output)
+# llm = OpenAI(model_name="text-davinci-003", max_tokens=1024,streaming=True)
+llm = OpenAI(streaming=True, callbacks=[StreamingStdOutCallbackHandler()], temperature=0)
+output = llm("你是谁？")
+# print(output)

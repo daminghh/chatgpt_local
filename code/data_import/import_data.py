@@ -15,9 +15,9 @@ def to_embeddings(items):
 
 
 if __name__ == '__main__':
-    client = QdrantClient("127.0.0.1", port=6333)
+    client = QdrantClient("localhost", port=6333)
     collection_name = "data_collection"
-    openai.api_key = os.getenv("OPENAI_API_KEY")
+    openai.api_key = ""
     # 创建collection
     client.recreate_collection(
         collection_name=collection_name,

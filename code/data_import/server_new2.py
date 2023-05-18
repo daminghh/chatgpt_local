@@ -3,18 +3,17 @@ import pandas as pd
 import spacy
 import networkx as nx
 import os
-import numpy as np
 
 # Load OpenAI API key from environment variable
-openai.api_key = "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"
+openai.api_key = ""
 
 # Set up SpaCy model and graph
-nlp = spacy.load('zh_core_web_sm')
+nlp = spacy.load('en_core_web_sm')
 graph_dir = 'data'
 graph_filename = 'local_data_graph.csv'
 graph_path = os.path.join(graph_dir, graph_filename)
 if os.path.exists(graph_path):
-    G = nx.read_edgelist(graph_path, delimiter=',')
+    G = nx.read_edgelist(graph_path, delimiter=',', data=(('name', str), ('entity_type', str)))
 else:
     G = nx.Graph()
 
@@ -22,14 +21,14 @@ else:
 def answer_query(query):
     # Search graph for related nodes
     query_entity = nlp(query)[0].lemma_
-    related_entities = sorted([node['name'] for node in G.neighbors(query_entity)])
+    related_entities = sorted([node[1]['name'] for node in G.edges(query_entity, data=True) if node[2].get('name') is not None])
 
     if related_entities:
         # Construct answer using related entities
-        answer = f"{query} is related to "
+        answer = f"{query} 相关的有 "
         if len(related_entities) > 1:
             # Add commas between entities if there are multiple
-            answer += ', '.join(related_entities[:-1]) + ' and ' + related_entities[-1]
+            answer += '、'.join(related_entities[:-1]) + ' 和 ' + related_entities[-1]
         else:
             answer += related_entities[0]
         return answer
